@@ -1,5 +1,8 @@
 import redis from 'redis';
 import chalk from 'chalk';
+import makeDebug from 'debug';
+
+const debug = makeDebug('feathers-hooks-rediscache:redisClient');
 
 export default function redisClient() { // eslint-disable-line no-unused-vars
   const app = this;
@@ -10,7 +13,7 @@ export default function redisClient() { // eslint-disable-line no-unused-vars
       app.set('redisClient', undefined);
       /* istanbul ignore next */
       if (cacheOptions.env !== 'test') {
-        console.log(`${chalk.yellow('[redis]')} not connected`);
+        debug(`${chalk.yellow('[redis]')} not connected`);
       }
       return retryInterval;
     }
@@ -23,7 +26,7 @@ export default function redisClient() { // eslint-disable-line no-unused-vars
     app.set('redisClient', client);
     /* istanbul ignore next */
     if (cacheOptions.env !== 'test') {
-      console.log(`${chalk.green('[redis]')} connected`);
+      debug(`${chalk.green('[redis]')} connected`);
     }
   });
   return this;

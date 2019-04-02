@@ -2,6 +2,7 @@ import qs from 'qs';
 
 function parseNestedPath(path, params) {
   const re = new RegExp(':([^\\/\\?]+)\\??', 'g');
+
   let match = null;
 
   while ((match = re.exec(path)) !== null) {
@@ -17,6 +18,7 @@ function parsePath(hook, config = {removePathFromCacheKey: false, parseNestedRou
   const q = hook.params.query || {};
   const remove = config.removePathFromCacheKey;
   const parseNestedRoutes = config.parseNestedRoutes;
+
   let path = remove && hook.id ? '' : `${hook.path}`;
 
   if (!remove && parseNestedRoutes) {

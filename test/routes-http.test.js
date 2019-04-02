@@ -22,7 +22,7 @@ const rpushAsync = promisify(client.rpush).bind(client);
 const lrangeAsync = promisify(client.lrange).bind(client);
 
 const PORT = 3030;
-const serverUrl = `http://0.0.0.0:${PORT}`;
+const serverUrl = `http://localhost:${PORT}`;
 
 const HTTP_OK = 200;
 const HTTP_NO_CONTENT = 204;
