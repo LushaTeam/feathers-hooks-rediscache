@@ -8,7 +8,8 @@ const debug = makeDebug('feathers-hooks-rediscache:redis');
 const defaults = {
   env: 'production',
   defaultDuration: 3600 * 24,
-  immediateCacheKey: false
+  immediateCacheKey: false,
+  extendDuration: 0
 };
 
 export function before(options) { // eslint-disable-line no-unused-vars
@@ -18,6 +19,7 @@ export function before(options) { // eslint-disable-line no-unused-vars
     options = Object.assign({}, defaults, cacheOptions, options);
 
     return new Promise(resolve => {
+      const extendDuration = options.extendDuration || options.extendDuration;
       const client = hook.app.get('redisClient');
 
       if (!client) {
@@ -26,7 +28,7 @@ export function before(options) { // eslint-disable-line no-unused-vars
 
       const path = parsePath(hook, options);
 
-      client.get(path, (err, reply) => {
+      const callback = (err, reply) => {
         if (err !== null) resolve(hook);
         if (reply) {
           let data = JSON.parse(reply);
@@ -46,7 +48,16 @@ export function before(options) { // eslint-disable-line no-unused-vars
           }
           resolve(hook);
         }
-      });
+      };
+
+      if (extendDuration) {
+        client.multi()
+          .get(path, callback)
+          .expire(path, extendDuration)
+          .exec();
+      } else {
+        client.get(path, callback);
+      }
     });
   };
 };
