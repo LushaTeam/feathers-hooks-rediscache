@@ -34,7 +34,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('');
-      expect(data.cache.group).to.equal('');
       expect(data.cache.key).to.equal('test-route');
     });
   });
@@ -67,7 +66,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('');
-      expect(data.cache.group).to.equal('');
       expect(data.cache.key).to.equal('test-route');
     });
   });
@@ -131,7 +129,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('test-route');
-      expect(data.cache.group).to.equal('group-test-route');
       expect(data.cache.key).to.equal('test-route');
     });
   });
@@ -172,7 +169,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('test-route');
-      expect(data.cache.group).to.equal('group-test-route');
       expect(data.cache.key).to.equal('test-route');
     });
   });
@@ -213,7 +209,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('test-route');
-      expect(data.cache.group).to.equal('group-test-route');
       expect(data.cache.key).to.equal('test-route');
     });
   });
@@ -260,7 +255,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('test-route/:abcId');
-      expect(data.cache.group).to.equal('group-test-route/:abcId');
       expect(data.cache.key).to.equal('test-route/123/nested-route');
     });
   });
@@ -307,7 +301,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('test-route/:abcId?');
-      expect(data.cache.group).to.equal('group-test-route/:abcId?');
       expect(data.cache.key).to.equal('test-route/123/nested-route');
     });
   });
@@ -354,7 +347,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('test-route/:abcId?');
-      expect(data.cache.group).to.equal('group-test-route/:abcId?');
       expect(data.cache.key).to.equal('test-route/123');
     });
   });
@@ -387,7 +379,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('parent');
-      expect(data.cache.group).to.equal('group-parent');
       expect(data.cache.key).to.equal('parent?full=true');
     });
   });
@@ -420,7 +411,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('parent');
-      expect(data.cache.group).to.equal('group-parent');
       expect(data.cache.key).to.equal('parent/test-route');
     });
   });
@@ -462,7 +452,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('parent');
-      expect(data.cache.group).to.equal('group-parent');
       expect(data.cache.key).to.equal('test-route');
     });
   });
@@ -495,7 +484,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('parent');
-      expect(data.cache.group).to.equal('group-parent');
       expect(data.cache.key).to.equal('parent/test-route?full=true');
     });
   });
@@ -528,7 +516,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('parent');
-      expect(data.cache.group).to.equal('group-parent');
       expect(data.cache.key).to.equal('parent/test-route?id[$nin]=1');
     });
   });
@@ -561,7 +548,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('parent');
-      expect(data.cache.group).to.equal('group-parent');
       expect(data.cache.key).to.equal('parent/test-route?id[$nin]=1&id[test]=2');
     });
   });
@@ -603,7 +589,6 @@ describe('Redis After Hook', () => {
       expect(data.cache.cached).to.equal(true);
       expect(data.cache.duration).to.equal(8400);
       expect(data.cache.parent).to.equal('parent');
-      expect(data.cache.group).to.equal('group-parent');
       expect(data.cache.key).to.equal('test-route?full=true');
     });
   });
