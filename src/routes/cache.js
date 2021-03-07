@@ -1,6 +1,7 @@
 import express from 'express';
 
 import RedisCache from './helpers/redis';
+import { clearCache } from '../handlers';
 
 const HTTP_OK = 200;
 const HTTP_NO_CONTENT = 204;
@@ -22,55 +23,18 @@ function routes(app) {
   }); // clear a unique route
 
   // clear a unique route
-  router.get('/clear/single/*', (req, res) => {
-    let target = decodeURIComponent(req.params[0]);
-    // Formated options following ?
-    const query = req.query;
-    const hasQueryString = (query && (Object.keys(query).length !== 0));
+  router.get('/clear/single/*', async (req, res) => {
+    let statusCode;
 
-    // Target should always be defined as Express router raises 404
-    // as route is not handled
-    if (target.length) {
-      if (hasQueryString) {
-      // Keep queries in a single string with the taget
-        target = decodeURIComponent(req.url.split('/').slice(3).join('/'));
-      }
+    const result = await clearCache(req.params[0], req.query, req.url, client);
 
-      // Gets the value of a key in the redis client
-      client.get(`${target}`, (err, reply) => {
-        if (err) {
-          res.status(HTTP_SERVER_ERROR).json({
-            message: 'something went wrong' + err.message
-          });
-        } else {
-          // If the key existed
-          if (reply) {
-            // Clear existing cached key
-            h.clearSingle(target).then(r => {
-              res.status(HTTP_OK).json({
-                message: `cache cleared for key (${hasQueryString ?
-                  'with' : 'without'} params): ${target}`,
-                status: HTTP_OK
-              });
-            });
-          } else {
-            /**
-             * Empty reply means the key does not exist.
-             * Must use HTTP_OK with express as HTTP's RFC stats 204 should not
-             * provide a body, message would then be lost.
-             */
-            res.status(HTTP_OK).json({
-              message: `cache already cleared for key (${hasQueryString ?
-                'with' : 'without'} params): ${target}`,
-              status: HTTP_NO_CONTENT
-            });
-          }
-
-        }
-      });
+    if (result.status === HTTP_NO_CONTENT) {
+      statusCode = HTTP_OK;
     } else {
-      res.status(HTTP_NOT_FOUND).end();
+      statusCode = result.status;
     }
+
+    res.status(statusCode).json(result).end();
   });
 
   // clear a group

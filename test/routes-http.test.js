@@ -47,7 +47,7 @@ describe('Cache clearing http routes', () => {
       app.configure(redisClient);
       // Needed for parsing bodies (login)
       app.use(bodyParser.json());
-      app.use(bodyParser.urlencoded({ extended: true }))
+      app.use(bodyParser.urlencoded({ extended: true }));
       // add the cache routes (endpoints) to the app
       app.use('/cache', routes(app));
       app.use(errorHandler());
